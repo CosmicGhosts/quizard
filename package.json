@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "test": "npm run lint && mocha",
-    "lint": "snazzy src/"
+    "lint": "snazzy src/**/*.js test/**/*.js",
+    "start": "node ./src/index.js"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,10 @@
   "homepage": "https://github.com/seanstrom/quizard",
   "devDependencies": {
     "mocha": "^2.2.5",
-    "snazzy": "^2.0.1"
+    "snazzy": "^2.0.1",
+    "zombie": "^4.1.0"
+  },
+  "dependencies": {
+    "express": "^4.13.3"
   }
 }
