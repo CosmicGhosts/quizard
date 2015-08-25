@@ -41,3 +41,7 @@ Conjuring the Gauntlet with default riddles.
 ```shell
 npm run riddles
 ```
+Create an Aura that will cast the Summoning with phantom Elders and Recruits. (Tests)
+```shell
+npm test
+```
