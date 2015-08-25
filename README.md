@@ -16,8 +16,8 @@ We require a few sacred ingredients in order to manifest our Academy:
 * Mysql
 
 #### Preparations
-Once you obtain the sacred ingredients, you must cast a few spells.
-First you must replicate a magic chest from this magic chest.
+Once you obtain the sacred ingredients, you must cast a few spells.  
+First, you must replicate a magic chest from this magic chest.
 ```shell
 git clone git@github.com/seanstrom/quizard.git
 ```
