@@ -4,7 +4,7 @@
   "description": "Learn the Arcane Arts through our rigorious Gauntlet of riddles. Choose carefully... They may your doom.",
   "main": "index.js",
   "scripts": {
-    "test": "npm test",
+    "test": "npm run lint && mocha",
     "lint": "snazzy src/"
   },
   "repository": {
@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/seanstrom/quizard",
   "devDependencies": {
+    "mocha": "^2.2.5",
     "snazzy": "^2.0.1"
   }
 }
