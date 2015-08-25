@@ -6,7 +6,7 @@ Choose carefully... They may your doom.
 ## Elders (Admins)
 GrandMaster Wizards can seek passage at quizard.com/elder
 
-## Recruits (Users)
+## Apprenctices (Users)
 Newcomers may only enter through the main gates at quizard.com.
 
 ### The Ritual
@@ -41,7 +41,7 @@ Conjuring the Gauntlet with default riddles.
 ```shell
 npm run riddles
 ```
-Create an Aura that will cast the Summoning with phantom Elders and Recruits. (Tests)
+Create an Aura that will cast the Summoning with phantom Elders and Apprenctices. (Tests)
 ```shell
 npm test
 ```
