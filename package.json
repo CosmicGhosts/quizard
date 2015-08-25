@@ -1,0 +1,27 @@
+{
+  "name": "quizard",
+  "version": "0.1.0",
+  "description": "Learn the Arcane Arts through our rigorious Gauntlet of riddles. Choose carefully... They may your doom.",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seanstrom/quizard.git"
+  },
+  "keywords": [
+    "wizard",
+    "quiz",
+    "quizes",
+    "arcane",
+    "knowledge",
+    "magic"
+  ],
+  "author": "seanstrom",
+  "license": "LGPL",
+  "bugs": {
+    "url": "https://github.com/seanstrom/quizard/issues"
+  },
+  "homepage": "https://github.com/seanstrom/quizard"
+}
