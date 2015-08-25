@@ -6,7 +6,10 @@
   "scripts": {
     "test": "npm run lint && mocha",
     "lint": "snazzy src/**/*.js test/**/*.js",
-    "start": "node ./src/index.js"
+    "start": "node ./src/index.js",
+    "dev": "nodemon -w src/ src/index.js",
+    "features": "mocha --harmony --reporter spec test/feature",
+    "specs": "mocha --harmony --reporter spec test/unit"
   },
   "repository": {
     "type": "git",
@@ -28,10 +31,12 @@
   "homepage": "https://github.com/seanstrom/quizard",
   "devDependencies": {
     "mocha": "^2.2.5",
+    "nodemon": "^1.4.1",
     "snazzy": "^2.0.1",
     "zombie": "^4.1.0"
   },
   "dependencies": {
-    "express": "^4.13.3"
+    "express": "^4.13.3",
+    "jade": "^1.11.0"
   }
 }
