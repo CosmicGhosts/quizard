@@ -2,7 +2,7 @@
   "name": "quizard",
   "version": "0.1.0",
   "description": "Learn the Arcane Arts through our rigorious Gauntlet of riddles. Choose carefully... They may your doom.",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "npm run lint && mocha",
     "lint": "snazzy src/"
