@@ -37,6 +37,8 @@
   },
   "dependencies": {
     "express": "^4.13.3",
-    "jade": "^1.11.0"
+    "jade": "^1.11.0",
+    "mysql": "^2.9.0",
+    "sequelize": "^3.6.0",
   }
 }
