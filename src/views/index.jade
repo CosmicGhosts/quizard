@@ -2,3 +2,9 @@ extends layout
 
 block content
   h1.site-title= 'Quizard'
+  
+  .questions
+    each question in questions
+      .question
+        .question-title= question.title
+        .question-description= question.description
