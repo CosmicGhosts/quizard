@@ -8,3 +8,7 @@ block content
       .question
         .question-title= question.title
         .question-description= question.description
+      .answers
+        each answer in question.Answers
+          .answer
+            .answer-description= answer.description

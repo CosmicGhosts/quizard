@@ -15,7 +15,7 @@ function renderQuestions (res) {
 
 router.get('/', function (req, res) {
   Question
-    .findAll()
+    .findAll({ include: [{ model: models.Answer }] })
     .then(renderQuestions(res))
 })
 
