@@ -1,10 +1,9 @@
-var express  = require('express')
 var uuid = require('node-uuid')
 var extend = require('util')._extend
-var helpers  = require('./helpers')
-var models   = helpers.models
+var helpers = require('./helpers')
+var models = helpers.models
 var Question = models.Question
-var User     = models.User
+var User = models.User
 var UserAnswer = models.UserAnswer
 var Answer = models.Answer
 
@@ -15,7 +14,7 @@ function getQuestion () {
     })
 }
 
-function renderQuestion(req, res) {
+function renderQuestion (req, res) {
   var defaults = { userToken: req.session.userToken }
   return function (data) {
     var newData = extend(data, defaults)
@@ -32,10 +31,10 @@ function createAnonymousUser (req, res, next) {
   var userToken = uuid.v4()
   req.session.userToken = userToken
 
-  var pendingNewUser = models.User
-        .create({ userToken: userToken })
-        .then(function (user) { next() })
-        .catch(function (err) { next(err) })
+  return models.User
+    .create({ userToken: userToken })
+    .then(function (user) { next() })
+    .catch(function (err) { next(err) })
 }
 
 function homePage (req, res) {
@@ -46,9 +45,8 @@ function homePage (req, res) {
 }
 
 function createUserAnswer (req, res) {
-  var userToken  = req.session.userToken
-  var questionId = req.params.questionId
-  var answerId   = req.params.answerId
+  var userToken = req.session.userToken
+  var answerId = req.params.answerId
 
   var getUser = User.find({ where: { userToken: userToken } })
   var getUserAnswer = UserAnswer.create({ AnswerId: answerId })

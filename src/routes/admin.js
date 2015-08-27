@@ -1,9 +1,7 @@
-var express  = require('express')
-var router   = express.Router()
-var helpers  = require('./helpers')
-var models   = helpers.models
-var User     = models.User
-var Admin    = models.Admin
+var helpers = require('./helpers')
+var models = helpers.models
+var User = models.User
+var Admin = models.Admin
 
 var renderUsersView = helpers.render('users')
 function renderUsers (res) {
@@ -26,7 +24,7 @@ function authLogin (passport) {
   })
 }
 
-function isLoggedIn(req, res, next) {
+function isLoggedIn (req, res, next) {
   if (req.isAuthenticated()) { return next() }
   res.redirect('/login')
 }
@@ -51,10 +49,10 @@ function renderLogin (req, res) {
   res.render('admin/login')
 }
 
-module.exports = function (router, passport) {
-  router.get('/admin', isLoggedIn, renderAdminDashboard)
-  router.get('/admin/login', renderLogin)
-  router.get('/admin/users', isLoggedIn, getUsers)
-  router.get('/admin/elders', getAdmins)
-  router.post('/admin/login', authLogin(passport))
+module.exports = function (app, passport) {
+  app.get('/admin', isLoggedIn, renderAdminDashboard)
+  app.get('/admin/login', renderLogin)
+  app.get('/admin/users', isLoggedIn, getUsers)
+  app.get('/admin/elders', getAdmins)
+  app.post('/admin/login', authLogin(passport))
 }

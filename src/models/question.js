@@ -4,7 +4,7 @@ module.exports = function (sequelize, DataTypes) {
     title: DataTypes.STRING
   }, {
     classMethods: {
-      associate: function(models) {
+      associate: function (models) {
         Question.hasMany(models.Answer)
       }
     }

@@ -1,6 +1,6 @@
-var bcrypt   = require('bcrypt-nodejs')
+var bcrypt = require('bcrypt-nodejs')
 
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
   var Admin = sequelize.define('Admin', {
     email: DataTypes.STRING,
     password: DataTypes.STRING
