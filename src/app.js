@@ -1,44 +1,35 @@
-var express = require('express')
+var path          = require('path')
+var express       = require('express')
+var passport      = require('passport')
+var bodyParser    = require('body-parser')
 var cookieSession = require('cookie-session')
-var uuid = require('node-uuid')
-var path = require('path')
-var passport = require('passport')
-var routes = require('./routes')
-var models = require('./models')
-var app = express()
 
-app.set('views', path.join(__dirname, 'views'))
-app.set('view engine', 'jade')
+var sessionConfig = require('./config/session.json')
+var setupPassport = require('./passport')
+var adminRoutes   = require('./adminRoutes')
+var routes        = require('./routes')
+var models        = require('./models')
+var app           = express()
 
+// Session Setup
+app.set('trust proxy', 1)
+app.use(cookieSession(sessionConfig))
+
+// Body Parser Setup
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+
+// Authentication Setup
+setupPassport(passport)
 app.use(passport.initialize())
 app.use(passport.session())
-passport.use(models.Admin.createStrategy())
-passport.serializeUser(models.Admin.serializeUser())
-passport.deserializeUser(models.Admin.deserializeUser())
 
-app.set('trust proxy', 1)
-app.use(cookieSession({
-  name: 'quizard-session',
-  secret: 'pertronum',
-  keys: ['pertronum']
-}))
+// Routes Setup
+routes(app)
+adminRoutes(app, passport)
 
-app.use(createAnonymousUser)
-app.use('/', routes)
-
-function createAnonymousUser (req, res, next) {
-  var newSession = req.session.isNew
-
-  if (!newSession && req.session.userToken) {
-    return next()
-  }
-
-  var userToken = uuid.v4()
-  req.session.userToken = userToken
-  models.User
-    .create({ userToken: userToken })
-    .then(function (user) { next() })
-    .catch(function (err) { next(err) })
-}
+// Views Setup
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'jade')
 
 module.exports = app
