@@ -3,12 +3,13 @@ var models = require('./models')
 var port = process.env.PORT || 3000
 
 function startApp () {
-  app.listen(port, function () {
-    console.log('started on port: ' + port)
-  })
+  var server = app.listen(port, function () {})
+  return server
 }
 
 app.set('port', port)
-models.sequelize
+var appSetup = models.sequelize
   .sync()
   .then(startApp)
+
+module.exports = appSetup
