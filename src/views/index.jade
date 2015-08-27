@@ -1,14 +1,17 @@
 extends layout
 
 block content
-  h1.site-title= 'Quizard'
-  
+  - var userUrl = "/users/" + userToken
   .questions
     each question in questions
+      - var questionUrl = userUrl + "/questions/" + question.id
       .question
         .question-title= question.title
         .question-description= question.description
       .answers
         each answer in question.Answers
-          .answer
-            .answer-description= answer.description
+          - var answerUrl = questionUrl + "/answers/" + answer.id
+          form(action=answerUrl, method='post')
+            .answer
+              .answer-description= answer.description
+              input(type="submit")
