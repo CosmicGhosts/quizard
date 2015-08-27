@@ -1,14 +1,14 @@
-var fs        = require("fs")
-var path      = require("path")
-var Sequelize = require("sequelize")
-var env       = process.env.NODE_ENV || "development"
+var fs        = require('fs')
+var path      = require('path')
+var Sequelize = require('sequelize')
+var env       = process.env.NODE_ENV || 'development'
 var basePath  = '../'
 var config    = require(basePath + 'config/config.json')[env]
 var sequelize = new Sequelize(config.database, config.username, config.password, config)
 
 function isModelFile (file) {
-  var notHiddenFile = (file.indexOf(".") !== 0)
-  var notThisFile = (file !== "index.js")
+  var notHiddenFile = (file.indexOf('.') !== 0)
+  var notThisFile = (file !== 'index.js')
   return notHiddenFile && notThisFile
 }
 

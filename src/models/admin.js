@@ -1,22 +1,21 @@
-var passportLocalSequelize = require('passport-local-sequelize')
+var bcrypt   = require('bcrypt-nodejs')
 
 module.exports = function(sequelize, DataTypes) {
   var Admin = sequelize.define('Admin', {
     email: DataTypes.STRING,
-    pass_hash: DataTypes.STRING,
-    pass_salt: DataTypes.STRING
+    password: DataTypes.STRING
   }, {
     classMethods: {
-      associate: function(models) {
+      associate: function (models) {
         Admin.hasOne(models.User)
+      },
+      generateHash: function (password) {
+        return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
+      },
+      validPassword: function (adminHash, password) {
+        return bcrypt.compareSync(password, adminHash)
       }
     }
-  })
-
-  passportLocalSequelize.attachToUser(Admin, {
-    usernameField: 'email',
-    hashField: 'pass_hash',
-    saltField: 'pass_salt'
   })
 
   return Admin

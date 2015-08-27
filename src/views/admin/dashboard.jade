@@ -1,0 +1,10 @@
+extend layout
+
+block content
+  form(action='/admin/questions/new', method='post')
+    .form-group
+        label Question Title
+        input(type="text" name="questionTitle")
+        label Question Description
+        input(type="text" name="questionTitle")
+        button(type='submit') Save

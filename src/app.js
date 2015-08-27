@@ -4,16 +4,17 @@ var passport      = require('passport')
 var bodyParser    = require('body-parser')
 var cookieSession = require('cookie-session')
 
-var sessionConfig = require('./config/session.json')
 var setupPassport = require('./passport')
-var adminRoutes   = require('./adminRoutes')
 var routes        = require('./routes')
 var models        = require('./models')
 var app           = express()
 
 // Session Setup
 app.set('trust proxy', 1)
-app.use(cookieSession(sessionConfig))
+app.use(cookieSession({
+  name: 'quizard-session',
+  keys: ['magic']
+}))
 
 // Body Parser Setup
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -25,8 +26,8 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 // Routes Setup
-routes(app)
-adminRoutes(app, passport)
+routes.root(app)
+routes.admin(app, passport)
 
 // Views Setup
 app.set('views', path.join(__dirname, 'views'))
