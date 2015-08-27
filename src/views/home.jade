@@ -1,10 +1,9 @@
 extends layout
 
 block content
-  - var userUrl = "/users/" + userToken
   .questions
     each question in questions
-      - var questionUrl = userUrl + "/questions/" + question.id
+      - var questionUrl = "/questions/" + question.id
       .question
         .question-title= question.title
         .question-description= question.description

@@ -1,11 +1,14 @@
 var uuid = require('node-uuid')
 var extend = require('util')._extend
+var basePath = '../'
 var helpers = require('./helpers')
+var QuestionCacher = require(basePath + 'modules/questionCacher')
 var models = helpers.models
 var Question = models.Question
 var User = models.User
 var UserAnswer = models.UserAnswer
 var Answer = models.Answer
+var QuestionCache = QuestionCacher({})
 
 function getQuestion () {
   return Question
@@ -46,17 +49,25 @@ function homePage (req, res) {
 
 function createUserAnswer (req, res) {
   var userToken = req.session.userToken
+  var questionId = req.params.questionId
   var answerId = req.params.answerId
+
+  // Answered Question Caching
+  // TODO: Extract to module
+  QuestionCache.set(userToken, questionId)
 
   var getUser = User.find({ where: { userToken: userToken } })
   var getUserAnswer = UserAnswer.create({ AnswerId: answerId })
 
   // use spread
-  return Promise.all([getUser, getUserAnswer]).then(function (values) {
+  var pendingAnswers = Promise.all([getUser, getUserAnswer]).then(function (values) {
     var user = values[0]
     var userAnswer = values[1]
     return user.setUserAnswers([userAnswer])
   })
+
+  // Handle Fail Case: when UserAnswer is not saved
+  return pendingAnswers
 }
 
 module.exports = function (app) {
