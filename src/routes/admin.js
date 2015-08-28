@@ -32,18 +32,6 @@ function isLoggedIn (req, res, next) {
   return res.redirect('/admin/login')
 }
 
-function getUsers (req, res) {
-  return User
-    .findAll({ include: [{ model: models.UserAnswer }] })
-    .then(renderUsers(res))
-}
-
-function getAdmins (req, res) {
-  return Admin
-    .findAll()
-    .then(renderElders(res))
-}
-
 function getQuestions (req, res) {
   QuestionsRepo.getQAs().then(function (questions) {
     res.render('admin/questions', {
@@ -95,10 +83,9 @@ function getStats (req, res) {
 module.exports = function (app, passport) {
   app.get('/admin', isLoggedIn, getStats)
   app.get('/admin/login', renderLogin)
-  app.get('/admin/users', isLoggedIn, getUsers)
-  app.get('/admin/elders', isLoggedIn, getAdmins)
   app.get('/admin/questions', isLoggedIn, getQuestions)
   app.post('/admin/login', authLogin(passport))
   app.post('/admin/questions/new', isLoggedIn, createQuestion)
   app.post('/admin/questions/:questionId/answers/new', isLoggedIn, createAnswer)
+  app.post('/admin/questions/:questionId/delete')
 }
