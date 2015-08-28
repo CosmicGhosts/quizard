@@ -17,3 +17,19 @@
 .admin .new-answer input {
   margin-bottom: 0.5em;
 }
+
+.admin .answer-count {
+  background-color: #666E88;
+  border-radius: 5px;
+  color: #fff;
+  padding: 5px 12px;
+}
+
+.admin .results .answer {
+  padding: 15px;
+}
+
+.admin .results .answer-description {
+  margin-right: 10px;
+}
+
