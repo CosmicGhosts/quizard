@@ -17,10 +17,6 @@ We require a few sacred ingredients in order to manifest our Academy:
 * Node
 * Mysql
 
-**Notes**  
-Configuration for Mysql are in `src/config/config.json`  
-Node 0.12.7 preferred
-
 #### Preparations
 Once you obtain the sacred ingredients, you must cast a few spells.  
 First, you must replicate a magic chest from this magic chest.
@@ -51,3 +47,10 @@ Create an Aura that will cast the Summoning with phantom Elders and Apprenctices
 ```shell
 npm test
 ```
+
+#### Words of Caution
+Configuration for Mysql are in `src/config/config.json`  
+Node 0.12.7 is preferred
+
+##### Missing Functionality
+Deleting Questions and Answers
