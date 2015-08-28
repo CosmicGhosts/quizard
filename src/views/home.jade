@@ -5,12 +5,11 @@ block content
     each question in questions
       - var questionUrl = "/questions/" + question.id
       .question
-        .question-title= question.title
-        .question-description= question.description
+        h1.question-title= question.title
+        p.question-description= question.description
       .answers
         each answer in question.Answers
           - var answerUrl = questionUrl + "/answers/" + answer.id
           form(action=answerUrl, method='post')
             .answer
-              .answer-description= answer.description
-              input.answer-button(type="submit")
+              a.btn.btn-primary.btn-lg.answer-button(type='submit' role='button')= answer.description
