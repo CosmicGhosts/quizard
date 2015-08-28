@@ -2,8 +2,7 @@ var helpers = require('./helpers')
 var models = helpers.models
 var User = models.User
 var Admin = models.Admin
-var Question = models.Question
-var QuestionsRepo = require('../repos/question')
+var QuestionsRepo = require('../repos/questions')
 
 var renderUsersView = helpers.render('users')
 function renderUsers (res) {
@@ -28,7 +27,7 @@ function authLogin (passport) {
 
 function isLoggedIn (req, res, next) {
   if (req.isAuthenticated()) { return next() }
-  res.redirect('/admin/login')
+  return res.redirect('/admin/login')
 }
 
 function getUsers (req, res) {

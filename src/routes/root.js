@@ -1,82 +1,33 @@
 var uuid = require('node-uuid')
 var extend = require('util')._extend
-var basePath = '../'
 var helpers = require('./helpers')
-var QuestionCacher = require(basePath + 'modules/questionCacher')
 var models = helpers.models
-var Question = models.Question
 var User = models.User
 var UserAnswer = models.UserAnswer
-var Answer = models.Answer
+
+var QuestionsRepo = require('../repos/questions')
+var questionIds = QuestionsRepo.questionIds
+var getAnsweredQuestions = QuestionsRepo.getAnsweredQuestions
+var getUnansweredQuestion = QuestionsRepo.getUnansweredQuestion
 
 var _cache = {}
-
-function getAnsweredQuestions (userToken) {
-  var userInclude = {
-    model: User,
-    where: { userToken: userToken }
-  }
-
-  var userAnswerInclude = {
-    model: UserAnswer,
-    include: [userInclude]
-  }
-
-  var answerInclude = {
-    model: Answer,
-    include: [userAnswerInclude]
-  }
-
-  return Question.findAll({
-    include: [answerInclude],
-    order: [models.Sequelize.fn('RAND')]
-  })
+function getCache (token) { return _cache[token] }
+function setCache (token, ids) {
+  _cache[token] = ids
 }
 
 function populateQuestionCache (req, res, next) {
   var userToken = req.session.userToken
   if (!userToken) { return next() }
 
-  var isPopulated = _cache[userToken]
+  var isPopulated = getCache(userToken)
   if (isPopulated) { return next() }
 
-  return getAnsweredQuestions(userToken).then(function (questions) {
-    var ids = questions.map(function (question) { return question.id })
-    req.session.questionCache = true
-    _cache[userToken] = ids
-    next()
-  })
-}
-
-function nullQuestion (question) {
-  if (!question) {
-    return {
-      title: 'No Questions',
-      description: 'There are no more questions',
-      Answers: []
-    }
-  }
-
-  return question
-}
-
-function getQuestion (userToken) {
-  var query = {
-    include: [Answer]
-  }
-
-  var answeredIds = _cache[userToken] || []
-  if (!(answeredIds.length === 0)) {
-    query['where'] = {
-      id: {
-        $notIn: answeredIds
-      }
-    }
-  }
-  
-  return Question
-    .findOne(query)
-    .then(nullQuestion)
+  return getAnsweredQuestions(userToken)
+    .then(questionIds)
+    .then(setCache.bind(null, userToken))
+    .then(next.bind(null, null))
+    .catch(next)
 }
 
 function renderQuestion (req, res) {
@@ -96,7 +47,7 @@ function createAnonymousUser (req, res, next) {
   var userToken = uuid.v4()
   req.session.userToken = userToken
 
-  return models.User
+  return User
     .create({ userToken: userToken })
     .then(function (user) { next() })
     .catch(function (err) { next(err) })
@@ -104,10 +55,16 @@ function createAnonymousUser (req, res, next) {
 
 function homePage (req, res) {
   var userToken = req.session.userToken
-  return getQuestion(userToken).then(function (question) {
-    var data = { questions: [question] }
-    return renderQuestion(req, res)(data)
-  })
+  var answredIds = getCache(userToken)
+
+  return getUnansweredQuestion(answredIds)
+    .then(function (question) {
+      var data = { questions: [question] }
+      return renderQuestion(req, res)(data)
+    })
+    .catch(function (err) {
+      console.log(err)
+    })
 }
 
 function createUserAnswer (req, res) {
@@ -115,24 +72,24 @@ function createUserAnswer (req, res) {
   var questionId = req.params.questionId
   var answerId = req.params.answerId
 
-  // Answered Question Caching
-  // TODO: Extract to module
-  _cache[userToken].push(Number(questionId))
+  getCache(userToken).push(Number(questionId))
 
   var getUser = User.findOne({ where: { userToken: userToken } })
   var getUserAnswer = UserAnswer.create({ AnswerId: answerId })
 
-  // use spread
-  var pendingAnswers = Promise.all([getUser, getUserAnswer]).then(function (values) {
-    var user = values[0]
-    var userAnswer = values[1]
-    return user.setUserAnswers([userAnswer])
-  })
+  // TODO: use spread
+  var pendingAnswers = Promise.all([getUser, getUserAnswer])
+    .then(function (values) {
+      var user = values[0]
+      var userAnswer = values[1]
+      return user.setUserAnswers([userAnswer])
+    })
 
   // Handle Fail Case: when UserAnswer is not saved
   return pendingAnswers.then(function () {
     res.redirect('/')
   }).catch(function (err) {
+    console.log(err)
     res.redirect('/')
   })
 }
