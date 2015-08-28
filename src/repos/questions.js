@@ -18,6 +18,7 @@ function buildUnansweredQuery (baseQuery, answeredIds) {
   if (!isEmpty(answeredIds)) {
     query['where'] = { id: { $notIn: answeredIds } }
   }
+  return query
 }
 
 function nullQuestion (question) {
