@@ -2,9 +2,8 @@ extends layout
 
 block content
   .row
-    .col-xs-2.col-md-2
-    .col-xs-8.col-md-8
-      .questions.row
+    .col-xs-12.col-sm-12.col-md-8
+      .questions
         each question in questions
           - var questionUrl = "/questions/" + question.id
           .question.row
@@ -21,4 +20,3 @@ block content
                           type='submit'
                           role='button'
                           value= answer.description)
-    .col-xs-2.col-md-2
