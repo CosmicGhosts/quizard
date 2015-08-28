@@ -17,7 +17,10 @@ function addAnswers (questions) {
 }
 
 function createQuestion (question, answers) {
-  Question.findOrCreate({ where: { title: 'What is the Meaning of Life?' } })
+  Question.findOrCreate({ where: {
+    title: 'What is the Meaning of Life?',
+    description: 'There have been several blah'
+  } })
     .then(addAnswers)
     .then(complete)
     .catch(console.log)
