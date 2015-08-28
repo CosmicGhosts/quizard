@@ -1,29 +1,18 @@
 var basePath = '../../'
-var models = require(basePath + 'models')
-var Question = models.Question
-var Answer = models.Answer
+var QuestionsRepo = require(basePath + 'repos/questions')
 
-function complete () { process.exit() }
-
-function addAnswers (questions) {
-  var answers = questions.map(function (question) {
-    return Answer.create({
-      description: 'Love',
-      QuestionId: question.id
-    })
-  })
-
-  return Promise.all(answers)
+var question =  {
+  title: 'What is the Meaning of Life?'
 }
 
-function createQuestion (question, answers) {
-  Question.findOrCreate({ where: {
-    title: 'What is the Meaning of Life?',
-    description: 'There have been several blah'
-  } })
-    .then(addAnswers)
-    .then(complete)
-    .catch(console.log)
+var answers = [
+  { description: 'Love' },
+  { description: 'Money' }
+]
+
+function seed () {
+  return QuestionsRepo
+    .createQAs(question, answers)
 }
 
-createQuestion()
+exports.seed = seed

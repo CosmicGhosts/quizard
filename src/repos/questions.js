@@ -109,6 +109,25 @@ function getStats () {
     })
 }
 
+function addAnswers (question, answers) {
+  var pendingAnswers = answers.map(function (answer) {
+    return Answer.create(answer)
+  })
+  return Promise
+    .all(pendingAnswers)
+    .then(function (answers) {
+      return question.setAnswers(answers)
+    })
+}
+
+function createQAs (question, answers) {
+  return Question
+    .create(question)
+    .then(function (question) {
+      return addAnswers(question, answers)
+    })
+}
+
 exports.create = createQuestion
 exports.getQAs = getQuestionWithAnswers
 exports.getStats = getStats
@@ -116,3 +135,4 @@ exports.getAnsweredQuestions = getAnsweredQuestions
 exports.getUnansweredQuestion = getUnansweredQuestion
 exports.nullQuestion = nullQuestion
 exports.questionIds = questionIds
+exports.createQAs = createQAs
