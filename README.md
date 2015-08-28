@@ -1,10 +1,12 @@
 # Quizard
 
-Learn the Arcane Arts through our rigorious Gauntlet of riddles.
+Learn the Arcane Arts through our rigorious Gauntlet of riddles.  
 Choose carefully... They may your doom.
 
 ## Elders (Admins)
-GrandMaster Wizards can seek passage at quizard.com/elder
+GrandMaster Wizards can seek passage at quizard.com/elder  
+The secret words are `admin@sumome.com` and `quizard`
+**Note** Cast the `toil` spell
 
 ## Apprenctices (Users)
 Newcomers may only enter through the main gates at quizard.com.
@@ -41,11 +43,11 @@ npm start
 ```
 
 #### Additional Spells
-Conjuring the Gauntlet with default riddles.
+Conjuring the Gauntlet with default riddles and more. (Seed/Reseed)
 ```shell
-npm run riddles
+npm run toil
 ```
-Create an Aura that will cast the Summoning with phantom Elders and Apprenctices. (Tests)
+Create an Aura that will cast the Summoning with phantom Elders and Apprenctices. (Tests) WIP
 ```shell
 npm test
 ```
