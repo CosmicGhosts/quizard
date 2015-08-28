@@ -8,13 +8,75 @@ var Question = models.Question
 var User = models.User
 var UserAnswer = models.UserAnswer
 var Answer = models.Answer
-var QuestionCache = QuestionCacher({})
 
-function getQuestion () {
+var _cache = {}
+
+function getAnsweredQuestions (userToken) {
+  var userInclude = {
+    model: User,
+    where: { userToken: userToken }
+  }
+
+  var userAnswerInclude = {
+    model: UserAnswer,
+    include: [userInclude]
+  }
+
+  var answerInclude = {
+    model: Answer,
+    include: [userAnswerInclude]
+  }
+
+  return Question.findAll({
+    include: [answerInclude],
+    order: [models.Sequelize.fn('RAND')]
+  })
+}
+
+function populateQuestionCache (req, res, next) {
+  var userToken = req.session.userToken
+  if (!userToken) { return next() }
+
+  var isPopulated = _cache[userToken]
+  if (isPopulated) { return next() }
+
+  return getAnsweredQuestions(userToken).then(function (questions) {
+    var ids = questions.map(function (question) { return question.id })
+    req.session.questionCache = true
+    _cache[userToken] = ids
+    next()
+  })
+}
+
+function nullQuestion (question) {
+  if (!question) {
+    return {
+      title: 'No Questions',
+      description: 'There are no more questions',
+      Answers: []
+    }
+  }
+
+  return question
+}
+
+function getQuestion (userToken) {
+  var query = {
+    include: [Answer]
+  }
+
+  var answeredIds = _cache[userToken] || []
+  if (!(answeredIds.length === 0)) {
+    query['where'] = {
+      id: {
+        $notIn: answeredIds
+      }
+    }
+  }
+  
   return Question
-    .findOne({
-      include: [Answer]
-    })
+    .findOne(query)
+    .then(nullQuestion)
 }
 
 function renderQuestion (req, res) {
@@ -41,7 +103,8 @@ function createAnonymousUser (req, res, next) {
 }
 
 function homePage (req, res) {
-  return getQuestion().then(function (question) {
+  var userToken = req.session.userToken
+  return getQuestion(userToken).then(function (question) {
     var data = { questions: [question] }
     return renderQuestion(req, res)(data)
   })
@@ -54,9 +117,9 @@ function createUserAnswer (req, res) {
 
   // Answered Question Caching
   // TODO: Extract to module
-  QuestionCache.set(userToken, questionId)
+  _cache[userToken].push(Number(questionId))
 
-  var getUser = User.find({ where: { userToken: userToken } })
+  var getUser = User.findOne({ where: { userToken: userToken } })
   var getUserAnswer = UserAnswer.create({ AnswerId: answerId })
 
   // use spread
@@ -67,11 +130,16 @@ function createUserAnswer (req, res) {
   })
 
   // Handle Fail Case: when UserAnswer is not saved
-  return pendingAnswers
+  return pendingAnswers.then(function () {
+    res.redirect('/')
+  }).catch(function (err) {
+    res.redirect('/')
+  })
 }
 
 module.exports = function (app) {
   app.use(createAnonymousUser)
+  app.use(populateQuestionCache)
   app.get('/', homePage)
   app.post('/questions/:questionId/answers/:answerId', createUserAnswer)
 }
