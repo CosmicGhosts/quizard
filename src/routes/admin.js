@@ -2,6 +2,8 @@ var helpers = require('./helpers')
 var models = helpers.models
 var User = models.User
 var Admin = models.Admin
+var Question = models.Question
+var QuestionsRepo = require('../repos/question')
 
 var renderUsersView = helpers.render('users')
 function renderUsers (res) {
@@ -19,14 +21,14 @@ function renderElders (res) {
 
 function authLogin (passport) {
   return passport.authenticate('local-login', {
-    failureRedirect: '/login',
+    failureRedirect: '/admin/login',
     successRedirect: '/admin'
   })
 }
 
 function isLoggedIn (req, res, next) {
   if (req.isAuthenticated()) { return next() }
-  res.redirect('/login')
+  res.redirect('/admin/login')
 }
 
 function getUsers (req, res) {
@@ -42,7 +44,11 @@ function getAdmins (req, res) {
 }
 
 function renderAdminDashboard (req, res) {
-  res.render('admin/dashboard')
+  QuestionsRepo.getQAs().then(function (questions) {
+    res.render('admin/dashboard', {
+      questions: questions
+    })
+  })
 }
 
 function renderLogin (req, res) {
