@@ -71,8 +71,8 @@ function saveUserAnswer (userToken, answerId) {
   var getUser = User.findOne({ where: { userToken: userToken } })
   var getUserAnswer = UserAnswer.create({ AnswerId: answerId })
   return Promise.all([getUser, getUserAnswer])
-  // TODO: use spread
     .then(function (values) {
+      // TODO: use spread
       var user = values[0]
       var userAnswer = values[1]
       return user.setUserAnswers([userAnswer])
