@@ -3,15 +3,13 @@ extend layout
 block content
   h2 Results
   .results
-    h2 Questions
     .questions
       each question in questions
+        hr
         .question
           h3.question-title= question.title
-          h2 Answers
           .answers
             each answer in question.Answers
               .answer
-                h3.answer-description= answer.description
-                h5 How Many Chose This Answer?
-                span= answer.UserAnswerCount
+                span.answer-description= answer.description
+                span.answer-count= answer.UserAnswerCount
