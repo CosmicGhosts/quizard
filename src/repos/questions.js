@@ -127,6 +127,14 @@ function createQAs (question, answers) {
     })
 }
 
+function destroyById (questionId) {
+  return Question
+    .findById(questionId)
+    .then(function (question) {
+      return question.destroy()
+    })
+}
+
 exports.create = createQuestion
 exports.getQAs = getQuestionWithAnswers
 exports.getStats = getStats

@@ -10,6 +10,7 @@ block content
       .question
         h3.question-title= question.title
         p.question-description= question.description
+        form(action=questionUrl + '/delete', method='post')
       .answers
         each answer in question.Answers
           .answer= answer.description

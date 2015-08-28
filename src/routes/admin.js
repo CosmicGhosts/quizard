@@ -61,6 +61,15 @@ function createAnswer (req, res) {
     })
 }
 
+function deleteQuestion (req, res) {
+  var questionId = req.params.questionId
+  return QuestionsRepo
+    .deleteById(questionId)
+    .then(function() {
+      res.redirect('/admin/questions')
+    })
+}
+
 module.exports = function (app, passport) {
   app.get('/admin', isLoggedIn, getStats)
   app.get('/admin/login', renderLogin)
@@ -68,5 +77,5 @@ module.exports = function (app, passport) {
   app.post('/admin/login', authLogin(passport))
   app.post('/admin/questions/new', isLoggedIn, createQuestion)
   app.post('/admin/questions/:questionId/answers/new', isLoggedIn, createAnswer)
-  app.post('/admin/questions/:questionId/delete')
+  app.post('/admin/questions/:questionId/delete', isLoggedIn, deleteQuestion)
 }
