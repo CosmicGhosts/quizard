@@ -33,4 +33,7 @@ routes.admin(app, passport)
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'jade')
 
+// Assets Setup
+app.use(express.static(__dirname + '/public'))
+
 module.exports = app
