@@ -9,7 +9,7 @@
     "start": "node ./src/index.js",
     "dev": "nodemon -w src/ src/index.js",
     "features": "mocha --harmony --reporter spec test/feature/**/*.spec.*",
-    "specs": "mocha --harmony --reporter spec test/unit"
+    "toil": "node ./src/config/seeds/reseed"
   },
   "repository": {
     "type": "git",
