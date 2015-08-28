@@ -67,31 +67,33 @@ function homePage (req, res) {
     })
 }
 
-function createUserAnswer (req, res) {
-  var userToken = req.session.userToken
-  var questionId = req.params.questionId
-  var answerId = req.params.answerId
-
-  getCache(userToken).push(Number(questionId))
-
+function saveUserAnswer (userToken, answerId) {
   var getUser = User.findOne({ where: { userToken: userToken } })
   var getUserAnswer = UserAnswer.create({ AnswerId: answerId })
-
+  return Promise.all([getUser, getUserAnswer])
   // TODO: use spread
-  var pendingAnswers = Promise.all([getUser, getUserAnswer])
     .then(function (values) {
       var user = values[0]
       var userAnswer = values[1]
       return user.setUserAnswers([userAnswer])
     })
+}
 
-  // Handle Fail Case: when UserAnswer is not saved
-  return pendingAnswers.then(function () {
-    res.redirect('/')
-  }).catch(function (err) {
-    console.log(err)
-    res.redirect('/')
-  })
+function createUserAnswer (req, res) {
+  var userToken = req.session.userToken
+  var answerId = req.params.answerId
+  var questionId = req.params.questionId
+  
+  getCache(userToken).push(Number(questionId))
+
+  return saveUserAnswer(userToken, answerId)
+    .then(function () {
+      res.redirect('/')
+    }).catch(function (err) {
+      // Handle Fail Case: when UserAnswer is not saved
+      console.log(err)
+      res.redirect('/')
+    })
 }
 
 module.exports = function (app) {
