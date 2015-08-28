@@ -100,8 +100,6 @@ function addAnswerUserAnswerCount (question) {
 }
 
 function getStats () {
-  var sequelize = models.sequelize
-  var attrs = Object.keys(Answer.attributes)
   return Question
     .findAll({ include: [Answer] })
     .then(function (questions) {

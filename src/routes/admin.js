@@ -1,24 +1,7 @@
 var helpers = require('./helpers')
 var models = helpers.models
-var User = models.User
 var Answer = models.Answer
-var Admin = models.Admin
-var Question = models.Question
 var QuestionsRepo = require('../repos/questions')
-
-var renderUsersView = helpers.render('users')
-function renderUsers (res) {
-  return function (users) {
-    renderUsersView(res, { users: users })
-  }
-}
-
-var renderEldersView = helpers.render('elders')
-function renderElders (res) {
-  return function (elders) {
-    renderEldersView(res, { elders: elders })
-  }
-}
 
 function authLogin (passport) {
   return passport.authenticate('local-login', {
@@ -42,10 +25,6 @@ function getQuestions (req, res) {
 
 function renderLogin (req, res) {
   res.render('admin/login')
-}
-
-function renderDashboard (req, res) {
-  res.render('admin/dashboard')
 }
 
 function createQuestion (req, res) {
