@@ -1,3 +1,4 @@
+var Promise = require('bluebird')
 var extend = require('util')._extend
 var models = require('../models')
 var Question = models.Question

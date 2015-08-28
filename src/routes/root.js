@@ -1,3 +1,4 @@
+var Promise = require('bluebird')
 var uuid = require('node-uuid')
 var extend = require('util')._extend
 var helpers = require('./helpers')
@@ -71,10 +72,7 @@ function saveUserAnswer (userToken, answerId) {
   var getUser = User.findOne({ where: { userToken: userToken } })
   var getUserAnswer = UserAnswer.create({ AnswerId: answerId })
   return Promise.all([getUser, getUserAnswer])
-    .then(function (values) {
-      // TODO: use spread
-      var user = values[0]
-      var userAnswer = values[1]
+    .spread(function (user, userAnswer) {
       return user.setUserAnswers([userAnswer])
     })
 }
