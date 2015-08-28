@@ -1,39 +1,31 @@
 extend layout
 
 block content
-
-  h2 Questions
-  
+  h1 Questions
   .questions
     each question in questions
       - var questionUrl = "/admin/questions/" + question.id
       - var newAnswerUrl = questionUrl + "/answers/new"
-      
-      .question
-        h3.question-title= 'Title: ' + question.title
-        p.question-description= question.description
-        
-      .answers
-        h4 Question's Answers
-        each answer in question.Answers          
-          .answer
-            h3.answer-description= answer.description
-            
-        h3 New Answer
-        form(action=newAnswerUrl, method='post')
-          .form-group
-            label(for='answerDescriptionInput') Answer Description
-            input#answerDescriptionInput.form-control(type'text' name='answerDescription')
-          button.btn.btn-default(type='submit') Add Answer
       hr
-      
+      .question
+        h3.question-title= question.title
+        p.question-description= question.description
+      .answers
+        each answer in question.Answers
+          .answer= answer.description
+          
+      form.new-answer(action=newAnswerUrl, method='post')
+        .form-group
+          label(for='answerInput') Add Answer
+          input#answerInput.form-control(type'text' name='answerDescription')
+          button.btn.btn-default(type='submit') Save
+  hr
   h2 Add Question
-  
   form(action='/admin/questions/new', method='post')
     .form-group
-      label(for='questionTitleInput') Question Title
+      label(for='questionTitleInput') Title
       input#questionTitleInput.form-control(type='text' name='questionTitle')
     .form-group
-      label(for='questionDescriptionInput') Question Description
+      label(for='questionDescriptionInput') Description
       input#questionDescriptionInput.form-control(type='text' name='questionDescription')
     button.btn.btn-default(type='submit') Save

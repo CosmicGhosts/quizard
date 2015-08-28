@@ -1,3 +1,19 @@
 .answer input {
   width: 100%;
 }
+
+.admin .questions .answers {
+  margin-bottom: 1em;
+}
+
+.admin .questions .answer {
+  background-color: #eee;
+  border-radius: 3px;
+  display: inline-block;
+  margin-right: 5px;
+  padding: 5px 8px;
+}
+
+.admin .new-answer input {
+  margin-bottom: 0.5em;
+}
