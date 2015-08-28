@@ -1,6 +1,7 @@
 var Promise = require('bluebird')
 var uuid = require('node-uuid')
 var extend = require('util')._extend
+
 var helpers = require('./helpers')
 var models = helpers.models
 var User = models.User
@@ -17,6 +18,28 @@ function setCache (token, ids) {
   _cache[token] = ids
 }
 
+function renderQuestion (req, res) {
+  var defaults = { userToken: req.session.userToken }
+  return function (data) {
+    var newData = extend(data, defaults)
+    res.render('home', newData)
+  }
+}
+
+function renderHome (req, res) {
+  var userToken = req.session.userToken
+  var answredIds = getCache(userToken)
+
+  return getUnansweredQuestion(answredIds)
+    .then(function (question) {
+      var data = { questions: [question] }
+      return renderQuestion(req, res)(data)
+    })
+    .catch(function (err) {
+      console.log(err)
+    })
+}
+
 function populateQuestionCache (req, res, next) {
   var userToken = req.session.userToken
   if (!userToken) { return next() }
@@ -31,19 +54,9 @@ function populateQuestionCache (req, res, next) {
     .catch(next)
 }
 
-function renderQuestion (req, res) {
-  var defaults = { userToken: req.session.userToken }
-  return function (data) {
-    var newData = extend(data, defaults)
-    res.render('home', newData)
-  }
-}
-
 function createAnonymousUser (req, res, next) {
   var newSession = req.session.isNew
-  if (!newSession && req.session.userToken) {
-    return next()
-  }
+  if (!newSession) { return next() }
 
   var userToken = uuid.v4()
   req.session.userToken = userToken
@@ -52,20 +65,6 @@ function createAnonymousUser (req, res, next) {
     .create({ userToken: userToken })
     .then(function (user) { next() })
     .catch(function (err) { next(err) })
-}
-
-function homePage (req, res) {
-  var userToken = req.session.userToken
-  var answredIds = getCache(userToken)
-
-  return getUnansweredQuestion(answredIds)
-    .then(function (question) {
-      var data = { questions: [question] }
-      return renderQuestion(req, res)(data)
-    })
-    .catch(function (err) {
-      console.log(err)
-    })
 }
 
 function saveUserAnswer (userToken, answerId) {
@@ -88,7 +87,6 @@ function createUserAnswer (req, res) {
     .then(function () {
       res.redirect('/')
     }).catch(function (err) {
-      // Handle Fail Case: when UserAnswer is not saved
       console.log(err)
       res.redirect('/')
     })
@@ -97,6 +95,6 @@ function createUserAnswer (req, res) {
 module.exports = function (app) {
   app.use(createAnonymousUser)
   app.use(populateQuestionCache)
-  app.get('/', homePage)
+  app.get('/', renderHome)
   app.post('/questions/:questionId/answers/:answerId', createUserAnswer)
 }

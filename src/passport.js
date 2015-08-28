@@ -32,19 +32,20 @@ function handleLogin (req, email, password, done) {
     .catch(done)
 }
 
+function serializeAdmin (admin, done) {
+  done(null, admin.id)
+}
+
+function deserializeAdmin (id, done) {
+  return Admin
+    .findById(id)
+    .then(function (admin) { done(null, admin) })
+    .catch(done)
+}
+
 module.exports = function (passport) {
-  passport.serializeUser(function (admin, done) {
-    done(null, admin.id)
-  })
-
-  passport.deserializeUser(function (id, done) {
-    Admin.findById(id)
-      .then(function (admin) {
-        done(null, admin)
-      })
-      .catch(done)
-  })
-
+  passport.serializeUser(serializeAdmin)
+  passport.deserializeUser(deserializeAdmin)
   passport.use('local-login', new LocalStrategy({
     usernameField : 'email',
     passwordField : 'password',

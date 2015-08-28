@@ -3,11 +3,8 @@ var models = helpers.models
 var Answer = models.Answer
 var QuestionsRepo = require('../repos/questions')
 
-function authLogin (passport) {
-  return passport.authenticate('local-login', {
-    failureRedirect: '/admin/login',
-    successRedirect: '/admin'
-  })
+function renderLogin (req, res) {
+  res.render('admin/login')
 }
 
 function isLoggedIn (req, res, next) {
@@ -15,24 +12,35 @@ function isLoggedIn (req, res, next) {
   return res.redirect('/admin/login')
 }
 
-function getQuestions (req, res) {
-  QuestionsRepo.getQAs().then(function (questions) {
-    res.render('admin/questions', {
-      questions: questions
-    })
+function authLogin (passport) {
+  return passport.authenticate('local-login', {
+    failureRedirect: '/admin/login',
+    successRedirect: '/admin'
   })
 }
 
-function renderLogin (req, res) {
-  res.render('admin/login')
+function getStats (req, res) {
+  return QuestionsRepo
+    .getStats()
+    .then(function (questions) {
+      res.render('admin/dashboard', { questions: questions })
+    })
+}
+
+function getQuestions (req, res) {
+  QuestionsRepo
+    .getQAs()
+    .then(function (questions) {
+      res.render('admin/questions', {
+        questions: questions
+      })
+    })
 }
 
 function createQuestion (req, res) {
-  var questionTitle = req.body.questionTitle
-  var questionDescription = req.body.questionDescription
   var pendingQuestion = QuestionsRepo.create({
-    title: questionTitle,
-    description: questionDescription
+    title: req.body.questionTitle,
+    description: req.body.questionDescription
   })
   return pendingQuestion
     .then(function (question) {
@@ -51,12 +59,6 @@ function createAnswer (req, res) {
     .then(function (answer) {
       res.redirect('/admin/questions')
     })
-}
-
-function getStats (req, res) {
-  return QuestionsRepo.getStats().then(function (questions) {
-    res.render('admin/dashboard', { questions: questions })
-  })
 }
 
 module.exports = function (app, passport) {
