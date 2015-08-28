@@ -15,8 +15,9 @@ We require a few sacred ingredients in order to manifest our Academy:
 * Node
 * Mysql
 
-**Note**
-Configuration for Mysql are in `src/config/config.json`
+**Notes**  
+Configuration for Mysql are in `src/config/config.json`  
+Node 0.12.7 preferred
 
 #### Preparations
 Once you obtain the sacred ingredients, you must cast a few spells.  
