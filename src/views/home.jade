@@ -2,18 +2,19 @@ extends layout
 
 block content
   .row
-    .col-xs-12.col-sm-12.col-md-8
+    .col-xs-12.col-sm-12.col-md-12
       .questions
         each question in questions
           - var questionUrl = "/questions/" + question.id
-          .question.row
+          .row
             .col-xs-12.col-sm-12.col-md-12
-              h1.question-title= question.title
-              p.question-description= question.description
+              .question
+                h1.question-title= question.title
+                p.question-description= question.description
               .answers.row
                 each answer in question.Answers
                   - var answerUrl = questionUrl + "/answers/" + answer.id
-                  .col-xs-3.col-sm-3.col-md-3
+                  .col-xs-12.col-sm-3.col-md-3
                     form(action=answerUrl, method='post')
                       .answer
                         input.btn.btn-primary.btn-lg.answer-button(

@@ -1,11 +1,15 @@
-.home .question-title {
+.home .question {
   background-color: #F7F7F7;
   margin-bottom: 1em;
-  padding: 100px;
+  padding: 100px 0;
   text-align: center;
-} 
+}
 
-.answer input {
+.home .answer {
+  margin-bottom: 1em;
+}
+
+.home .answer input {
   width: 100%;
 }
 
