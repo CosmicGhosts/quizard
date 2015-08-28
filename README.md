@@ -15,6 +15,9 @@ We require a few sacred ingredients in order to manifest our Academy:
 * Node
 * Mysql
 
+**Note**
+Configuration for Mysql are in `src/config/config.json`
+
 #### Preparations
 Once you obtain the sacred ingredients, you must cast a few spells.  
 First, you must replicate a magic chest from this magic chest.
