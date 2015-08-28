@@ -12,4 +12,7 @@ block content
           - var answerUrl = questionUrl + "/answers/" + answer.id
           form(action=answerUrl, method='post')
             .answer
-              a.btn.btn-primary.btn-lg.answer-button(type='submit' role='button')= answer.description
+              input.btn.btn-primary.btn-lg.answer-button(
+                type='submit'
+                role='button'
+                value= answer.description)
