@@ -1,18 +1,24 @@
 extends layout
 
 block content
-  .questions
-    each question in questions
-      - var questionUrl = "/questions/" + question.id
-      .question
-        h1.question-title= question.title
-        p.question-description= question.description
-      .answers
-        each answer in question.Answers
-          - var answerUrl = questionUrl + "/answers/" + answer.id
-          form(action=answerUrl, method='post')
-            .answer
-              input.btn.btn-primary.btn-lg.answer-button(
-                type='submit'
-                role='button'
-                value= answer.description)
+  .row
+    .col-xs-2.col-md-2
+    .col-xs-8.col-md-8
+      .questions.row
+        each question in questions
+          - var questionUrl = "/questions/" + question.id
+          .question.row
+            .col-xs-12.col-sm-12.col-md-12
+              h1.question-title= question.title
+              p.question-description= question.description
+              .answers.row
+                each answer in question.Answers
+                  - var answerUrl = questionUrl + "/answers/" + answer.id
+                  .col-xs-3.col-sm-3.col-md-3
+                    form(action=answerUrl, method='post')
+                      .answer
+                        input.btn.btn-primary.btn-lg.answer-button(
+                          type='submit'
+                          role='button'
+                          value= answer.description)
+    .col-xs-2.col-md-2

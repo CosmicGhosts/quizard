@@ -83,7 +83,7 @@ function createUserAnswer (req, res) {
   var userToken = req.session.userToken
   var answerId = req.params.answerId
   var questionId = req.params.questionId
-  
+
   getCache(userToken).push(Number(questionId))
 
   return saveUserAnswer(userToken, answerId)
