@@ -4,7 +4,6 @@ var Question = models.Question
 var Answer = models.Answer
 
 function complete () { process.exit() }
-// models.sequelize.sync({force:true})
 
 function addAnswers (questions) {
   var answers = questions.map(function (question) {

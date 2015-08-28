@@ -2,11 +2,7 @@ var basePath = '../../'
 var models = require(basePath + 'models')
 var Admin = models.Admin
 
-function complete () {
-  process.exit()
-}
-
-// models.sequelize.sync({force:true})
+function complete () { process.exit() }
 
 Admin
   .findOrCreate({
