@@ -4,8 +4,9 @@ module.exports = function (sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function (models) {
+        var options = { onDelete: 'CASCADE' }
         Answer.belongsTo(models.Question)
-        Answer.hasMany(models.UserAnswer)
+        Answer.hasMany(models.UserAnswer, options)
       }
     }
   })
