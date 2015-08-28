@@ -2,13 +2,17 @@ var basePath = '../../'
 var models = require(basePath + 'models')
 var Admin = models.Admin
 
+var admin = {
+  email: 'admin@sumome.com',
+  password: Admin.generateHash('quizard')
+}
+
 function createAdmin () {
   return Admin
     .findOrCreate({
-      where: { email: 'admin@sumome.com' },
-      defaults: { password: Admin.generateHash('quizard') }
+      where: { email: admin.email },
+      defaults: { password: admin.password }
     })
-    .catch(console.log)
 }
 
 exports.seed = createAdmin

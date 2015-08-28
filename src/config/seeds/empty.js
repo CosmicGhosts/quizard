@@ -6,7 +6,6 @@ function forceCleanDb () {
     .then(function () { return models.sequelize.sync({ force: true }) })
     .then(function () { return models.sequelize.query('SET FOREIGN_KEY_CHECKS = 1') })
     .then(function () { console.log('Database synchronised.') })
-    .catch(function (err) { console.log(err) })
 }
 
 exports.seed = forceCleanDb

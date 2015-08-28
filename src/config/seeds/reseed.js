@@ -1,3 +1,4 @@
+var Promise = require('bluebird')
 var clean = require('./empty')
 var admins = require('./admin')
 var questions = require('./question')
@@ -7,7 +8,5 @@ clean.seed()
     return Promise
       .all([admins.seed(), questions.seed()])
       .then(function () { process.exit() })
-      .catch(function (err) {
-        throw err
-      })
+      .catch(function (err) { throw err })
   })
