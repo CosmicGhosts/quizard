@@ -1,27 +1,3 @@
 extend layout
 
 block content
-  .questions
-    each question in questions
-      - var questionUrl = "/questions/" + question.id
-      .question
-        .question-title= question.title
-        .question-description= question.description
-      .answers
-        each answer in question.Answers
-          - var answerUrl = questionUrl + "/answers/new"
-          .answer
-            .answer-description= answer.description
-
-        form(action=answerUrl, method='post')
-          label New Answer
-          input(type'text' name='description')
-        
-  
-  form(action='/admin/questions/new', method='post')
-    .form-group
-        label Question Title
-        input(type="text" name="questionTitle")
-        label Question Description
-        input(type="text" name="questionTitle")
-        button(type='submit') Save
