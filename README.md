@@ -11,7 +11,7 @@ The secret words are `elder@sumome.com` and `quizard`
 ## Apprenctices (Users)
 Newcomers may only enter through the main gates at localhost:3000.
 
-### The Ritual
+## The Ritual (App)
 #### Ingredients
 We require a few sacred ingredients in order to manifest our Academy:
 * Node
