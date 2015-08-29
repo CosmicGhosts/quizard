@@ -39,6 +39,15 @@
 }
 
 .elder .results .answer-description {
+  display: inline-block;
+  float: left;
+  font-size: 1.5em;
+  margin-right: 10px;
+}
+
+.elder .results .answer-count {
+  display: inline-block;
+  float: right;
   margin-right: 10px;
 }
 

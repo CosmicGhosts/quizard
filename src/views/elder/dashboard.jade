@@ -8,10 +8,10 @@ block content
         hr
         .question
           h3.question-title= question.title
-          .container
-            .answers.row
-              each answer in question.Answers
-                .col-xs-4.col-sm-2.col-md-2.col-lg-2
-                  .answer
-                    span.answer-description= answer.description
-                    span.answer-count= answer.UserAnswerCount
+        .answers
+          .row
+            each answer in question.Answers
+              .col-xs-6.col-sm-6.col-md-6
+                .answer.clearfix
+                  span.answer-description= answer.description
+                  span.answer-count= answer.UserAnswerCount
