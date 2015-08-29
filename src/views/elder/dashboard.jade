@@ -1,13 +1,13 @@
 extend layout
 
 block content
-  h2 Results
+  h1 Results
   .results
     .questions
       each question in questions
         hr
         .question
-          h3.question-title= question.title
+          h2.question-title= question.title
         .answers
           .row
             each answer in question.Answers
