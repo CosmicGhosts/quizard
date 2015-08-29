@@ -12,6 +12,10 @@ The secret words are `elder@sumome.com` and `quizard`
 Newcomers may only enter through the main gates at localhost:3000.
 
 ## The Ritual (App)
+#### Words of Caution
+Configuration for Mysql are in `src/config/config.json`.  
+Node `0.12.7` or later is preferred.
+
 #### Ingredients
 We require a few sacred ingredients in order to manifest our Academy:
 * Node
@@ -51,7 +55,3 @@ Create an Aura that will cast the Summoning with phantom Elders and Apprenctices
 ```shell
 npm test
 ```
-
-#### Words of Caution
-Configuration for Mysql are in `src/config/config.json`  
-Node 0.12.7 is preferred
