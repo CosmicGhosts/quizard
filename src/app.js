@@ -25,15 +25,19 @@ setupPassport(passport)
 app.use(passport.initialize())
 app.use(passport.session())
 
-// Routes Setup
-routes.root(app)
-routes.elder(app, passport)
+// Assets Setup
+app.use(express.static(__dirname + '/public'))
 
 // Views Setup
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'jade')
 
-// Assets Setup
-app.use(express.static(__dirname + '/public'))
+// Routes Setup
+routes.root(app)
+routes.elder(app, passport)
+app.use(function(req, res, next) {
+  res.status(404)
+  res.render('404')
+});
 
 module.exports = app
