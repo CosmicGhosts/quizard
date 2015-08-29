@@ -6,8 +6,7 @@ Choose carefully... They may your doom.
 ## Elders (Admins)
 GrandMaster Wizards can seek passage at localhost:3000/elder  
 The secret words are `elder@sumome.com` and `quizard`  
-**Note**  
-Refence the spells at the bottom, specifically `npm run toil` spell.
+**Note** Refence the spells at the bottom, specifically `npm run toil` spell.
 
 ## Apprenctices (Users)
 Newcomers may only enter through the main gates at localhost:3000.
