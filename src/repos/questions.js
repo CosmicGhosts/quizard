@@ -143,3 +143,4 @@ exports.getUnansweredQuestion = getUnansweredQuestion
 exports.nullQuestion = nullQuestion
 exports.questionIds = questionIds
 exports.createQAs = createQAs
+exports.destroyById = destroyById

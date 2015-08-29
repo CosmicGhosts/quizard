@@ -61,11 +61,24 @@ function createAnswer (req, res) {
     })
 }
 
-function deleteQuestion (req, res) {
+function destroyQuestion (req, res) {
   var questionId = req.params.questionId
   return QuestionsRepo
-    .deleteById(questionId)
+    .destroyById(questionId)
     .then(function() {
+      res.redirect('/elder/questions')
+    })
+}
+
+function destroyAnswer (req, res) {
+  var answerId = req.params.answerId
+
+  return Answer
+    .findById(answerId)
+    .then(function (answer) {
+      return answer.destroy()
+    })
+    .then(function () {
       res.redirect('/elder/questions')
     })
 }
@@ -77,5 +90,6 @@ module.exports = function (app, passport) {
   app.post('/elder/login', authLogin(passport))
   app.post('/elder/questions/new', isLoggedIn, createQuestion)
   app.post('/elder/questions/:questionId/answers/new', isLoggedIn, createAnswer)
-  app.post('/elder/questions/:questionId/delete', isLoggedIn, deleteQuestion)
+  app.post('/elder/questions/:questionId/delete', isLoggedIn, destroyQuestion)
+  app.post('/elder/questions/:questionId/answers/:answerId/delete', isLoggedIn, destroyAnswer)
 }
