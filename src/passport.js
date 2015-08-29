@@ -1,5 +1,5 @@
-var Admin          = require('./models').Admin
-var LocalStrategy  = require('passport-local').Strategy
+var Admin = require('./models').Admin
+var LocalStrategy = require('passport-local').Strategy
 
 function validPassword (passHash, password) {
   return Admin.validPassword(passHash, password)
@@ -47,8 +47,8 @@ module.exports = function (passport) {
   passport.serializeUser(serializeAdmin)
   passport.deserializeUser(deserializeAdmin)
   passport.use('local-login', new LocalStrategy({
-    usernameField : 'email',
-    passwordField : 'password',
-    passReqToCallback : true
+    usernameField: 'email',
+    passwordField: 'password',
+    passReqToCallback: true
   }, handleLogin))
 }

@@ -1,13 +1,12 @@
-var path          = require('path')
-var express       = require('express')
-var passport      = require('passport')
-var bodyParser    = require('body-parser')
+var path = require('path')
+var express = require('express')
+var passport = require('passport')
+var bodyParser = require('body-parser')
 var cookieSession = require('cookie-session')
 
 var setupPassport = require('./passport')
-var routes        = require('./routes')
-var models        = require('./models')
-var app           = express()
+var routes = require('./routes')
+var app = express()
 
 // Session Setup
 app.set('trust proxy', 1)
@@ -35,9 +34,9 @@ app.set('view engine', 'jade')
 // Routes Setup
 routes.root(app)
 routes.elder(app, passport)
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.status(404)
   res.render('404')
-});
+})
 
 module.exports = app
