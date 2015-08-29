@@ -4,13 +4,13 @@ Learn the Arcane Arts through our rigorious Gauntlet of riddles.
 Choose carefully... They may your doom.
 
 ## Elders (Admins)
-GrandMaster Wizards can seek passage at quizard.com/elder  
+GrandMaster Wizards can seek passage at localhost:3000/elder  
 The secret words are `elder@sumome.com` and `quizard`  
 **Note**  
 Refence the spells at the bottom, specifically `npm run toil` spell.
 
 ## Apprenctices (Users)
-Newcomers may only enter through the main gates at quizard.com.
+Newcomers may only enter through the main gates at localhost:3000.
 
 ### The Ritual
 #### Ingredients
@@ -56,6 +56,3 @@ npm test
 #### Words of Caution
 Configuration for Mysql are in `src/config/config.json`  
 Node 0.12.7 is preferred
-
-##### Missing Functionality
-Robust Test Suite
