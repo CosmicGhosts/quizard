@@ -2,18 +2,27 @@ extend layout
 
 block content
   h1 Questions
-  .questions
+  .questions.edit
     each question in questions
-      - var questionUrl = "/admin/questions/" + question.id
+      - var questionUrl = '/elder/questions/' + question.id
       - var newAnswerUrl = questionUrl + "/answers/new"
       hr
       .question
-        h3.question-title= question.title
+        h3.question-title= question.title 
         p.question-description= question.description
         form(action=questionUrl + '/delete', method='post')
+          button.btn.btn-danger(type='submit') Delete
+          
       .answers
-        each answer in question.Answers
-          .answer= answer.description
+        .row
+          h4.col-sm-12 Answers
+          each answer in question.Answers
+            - var answerUrl = questionUrl + '/answers/' + answer.id
+            .col-sm-6
+              .answer.clearfix
+                span.answer-description= answer.description
+                form(action=answerUrl + '/delete', method='post')
+                  button.btn.btn-danger(type='submit') Delete
           
       form.new-answer(action=newAnswerUrl, method='post')
         .form-group
@@ -22,7 +31,7 @@ block content
           button.btn.btn-default(type='submit') Save
   hr
   h2 Add Question
-  form(action='/admin/questions/new', method='post')
+  form(action='/elder/questions/new', method='post')
     .form-group
       label(for='questionTitleInput') Title
       input#questionTitleInput.form-control(type='text' name='questionTitle')

@@ -13,34 +13,55 @@
   width: 100%;
 }
 
-.admin .questions .answers {
+.elder .questions .answers {
   margin-bottom: 1em;
 }
 
-.admin .questions .answer {
+.elder .questions .answer {
   background-color: #eee;
   border-radius: 3px;
-  display: inline-block;
-  margin-right: 5px;
   padding: 5px 8px;
 }
 
-.admin .new-answer input {
+.elder .new-answer input {
   margin-bottom: 0.5em;
 }
 
-.admin .answer-count {
+.elder .answer-count {
   background-color: #666E88;
   border-radius: 5px;
   color: #fff;
   padding: 5px 12px;
 }
 
-.admin .results .answer {
+.elder .results .answer {
   padding: 15px;
 }
 
-.admin .results .answer-description {
+.elder .results .answer-description {
   margin-right: 10px;
+}
+
+.results .answer {
+  margin-bottom: 1em;
+}
+
+.questions.edit .question {
+  margin-bottom: 2em;
+}
+
+.questions.edit .answer {
+  margin-bottom: 1em;
+  padding: 10px 15px;
+}
+
+.questions.edit .answer form {
+  display: inline-block;
+  float: right;
+}
+
+.questions.edit .answer-description {
+  float: left;
+  font-size: 1.3em;
 }
 

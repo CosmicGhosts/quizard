@@ -27,7 +27,7 @@ app.use(passport.session())
 
 // Routes Setup
 routes.root(app)
-routes.admin(app, passport)
+routes.elder(app, passport)
 
 // Views Setup
 app.set('views', path.join(__dirname, 'views'))

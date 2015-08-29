@@ -4,18 +4,18 @@ var Answer = models.Answer
 var QuestionsRepo = require('../repos/questions')
 
 function renderLogin (req, res) {
-  res.render('admin/login')
+  res.render('elder/login')
 }
 
 function isLoggedIn (req, res, next) {
   if (req.isAuthenticated()) { return next() }
-  return res.redirect('/admin/login')
+  return res.redirect('/elder/login')
 }
 
 function authLogin (passport) {
   return passport.authenticate('local-login', {
-    failureRedirect: '/admin/login',
-    successRedirect: '/admin'
+    failureRedirect: '/elder/login',
+    successRedirect: '/elder'
   })
 }
 
@@ -23,7 +23,7 @@ function getStats (req, res) {
   return QuestionsRepo
     .getStats()
     .then(function (questions) {
-      res.render('admin/dashboard', { questions: questions })
+      res.render('elder/dashboard', { questions: questions })
     })
 }
 
@@ -31,7 +31,7 @@ function getQuestions (req, res) {
   QuestionsRepo
     .getQAs()
     .then(function (questions) {
-      res.render('admin/questions', {
+      res.render('elder/questions', {
         questions: questions
       })
     })
@@ -44,7 +44,7 @@ function createQuestion (req, res) {
   })
   return pendingQuestion
     .then(function (question) {
-      res.redirect('/admin/questions')
+      res.redirect('/elder/questions')
     })
 }
 
@@ -57,7 +57,7 @@ function createAnswer (req, res) {
       QuestionId: questionId
     })
     .then(function (answer) {
-      res.redirect('/admin/questions')
+      res.redirect('/elder/questions')
     })
 }
 
@@ -66,16 +66,16 @@ function deleteQuestion (req, res) {
   return QuestionsRepo
     .deleteById(questionId)
     .then(function() {
-      res.redirect('/admin/questions')
+      res.redirect('/elder/questions')
     })
 }
 
 module.exports = function (app, passport) {
-  app.get('/admin', isLoggedIn, getStats)
-  app.get('/admin/login', renderLogin)
-  app.get('/admin/questions', isLoggedIn, getQuestions)
-  app.post('/admin/login', authLogin(passport))
-  app.post('/admin/questions/new', isLoggedIn, createQuestion)
-  app.post('/admin/questions/:questionId/answers/new', isLoggedIn, createAnswer)
-  app.post('/admin/questions/:questionId/delete', isLoggedIn, deleteQuestion)
+  app.get('/elder', isLoggedIn, getStats)
+  app.get('/elder/login', renderLogin)
+  app.get('/elder/questions', isLoggedIn, getQuestions)
+  app.post('/elder/login', authLogin(passport))
+  app.post('/elder/questions/new', isLoggedIn, createQuestion)
+  app.post('/elder/questions/:questionId/answers/new', isLoggedIn, createAnswer)
+  app.post('/elder/questions/:questionId/delete', isLoggedIn, deleteQuestion)
 }

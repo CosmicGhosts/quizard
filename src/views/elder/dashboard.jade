@@ -1,0 +1,17 @@
+extend layout
+
+block content
+  h2 Results
+  .results
+    .questions
+      each question in questions
+        hr
+        .question
+          h3.question-title= question.title
+          .container
+            .answers.row
+              each answer in question.Answers
+                .col-xs-4.col-sm-2.col-md-2.col-lg-2
+                  .answer
+                    span.answer-description= answer.description
+                    span.answer-count= answer.UserAnswerCount
