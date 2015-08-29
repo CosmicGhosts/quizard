@@ -1,6 +1,6 @@
 # Quizard
 
-Learn the Arcane Arts through our rigorious Gauntlet of riddles.  
+Learn the Arcane Arts through our rigorious Gauntlet of questions.  
 Choose carefully... They may your doom.
 
 ## Elders (Admins)
@@ -43,7 +43,7 @@ npm start
 ```
 
 #### Additional Spells
-Conjuring the Gauntlet with default riddles and more. (Seed/Reseed)
+Conjuring the Gauntlet with default questions and more. (Seed/Reseed)
 ```shell
 npm run toil
 ```
@@ -55,3 +55,10 @@ Create an Aura that will cast the Summoning with phantom Elders and Apprenctices
 ```shell
 npm test
 ```
+
+### Caveats
+#### No automated test coverage
+I tried building this out test first with a BDD approach, but got caught up in managing DB state when performing feature tests. So I scrapped theme, but just until I can write proper tests.
+
+#### Elder section Question creation
+The Elder section doesn't enforce a question to have answers in order to be created. Which means you must be dilligent to add answers to questions. If you don't the app will still show the unanswerable questions at the moment.
