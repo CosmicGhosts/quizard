@@ -24,7 +24,7 @@ var questionData = [
   },
   {
     question: {
-      title: 'Which is the better Progamming Language?'
+      title: 'Which is the best Progamming Language?'
     },
     answers: [
       { description: 'Ruby' },
