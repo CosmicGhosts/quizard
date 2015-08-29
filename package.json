@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "test": "npm run lint && mocha",
-    "lint": "snazzy src/**/*.js test/**/*.js",
+    "lint": "snazzy src/*.js src/**/*.js test/**/*.js",
     "start": "node ./src/index.js",
     "dev": "nodemon -w src/ src/index.js",
     "features": "mocha --harmony --reporter spec test/feature/**/*.spec.*",
