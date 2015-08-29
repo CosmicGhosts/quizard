@@ -65,7 +65,7 @@ function destroyQuestion (req, res) {
   var questionId = req.params.questionId
   return QuestionsRepo
     .destroyById(questionId)
-    .then(function() {
+    .then(function () {
       res.redirect('/elder/questions')
     })
 }
