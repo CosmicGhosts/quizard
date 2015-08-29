@@ -44,7 +44,7 @@ Conjuring the Gauntlet with default riddles and more. (Seed/Reseed)
 ```shell
 npm run toil
 ```
-Cast the Summoning spell in "developmen mode"
+Cast the alternate Summoning spell. (Development Mode)
 ```shell
 npm run dev
 ```
