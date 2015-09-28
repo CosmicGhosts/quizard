@@ -3,7 +3,7 @@ var models = require(basePath + 'models')
 var Admin = models.Admin
 
 var admin = {
-  email: 'elder@sumome.com',
+  email: 'elder@quizard.com',
   password: Admin.generateHash('quizard')
 }
 
